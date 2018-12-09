@@ -33,7 +33,6 @@ def read_lyrics(lyrics_dir=path, artist=None, album=None,
     if artist is not None:
         artists = [artist]
     else:
-        # artists = os.listdir(lyrics_dir)
         artists = os.listdir(path)
     artist_scores = []
     song_scores = []
@@ -45,12 +44,6 @@ def read_lyrics(lyrics_dir=path, artist=None, album=None,
         print ("Analyzing artist: %s" % a)
         rls = []
         all_words = []
-        # if album is not None:
-        #     albums = [album]
-        # else:
-        #     albums = os.listdir(lyrics_dir+'/'+a)
-        #     albums = sort_albums_by_year(albums)
-        # for al in albums:
         album_rls = []
         songs = os.listdir(lyrics_dir+'/'+a)
             # Only the .txt files
