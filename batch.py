@@ -4,6 +4,7 @@ import os
 import subprocess
 
 path = r"C:\Users\HSANG3\Desktop\Rhymer\lyricsGenerator"
+path = r"C:\Users\HSANG3\Desktop\Rhymer\lyrics_en"
 
 def IPA(dir=path, artist=None, album=None, print_stats=False, language='en-us', lookback=15):
 

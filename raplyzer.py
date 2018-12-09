@@ -9,7 +9,8 @@ import json
 
 from lyrics import Lyrics
 
-path = r'c:\Users\HSANG3\Desktop\MSBA 2019\Autumn\ISOM 673 Social Network Analytics\0000 Empirical paper\Social-Network-Analytics-of-Rap-Artists\Raplyzer\lyricsGenerator'
+path = r"C:\Users\HSANG3\Desktop\Rhymer\lyricsGenerator"
+path = r"C:\Users\HSANG3\Desktop\Rhymer\lyrics_en"
 
 def read_lyrics(lyrics_dir=path, artist=None, album=None, 
                 print_stats=False, language='en-us', lookback=15):
