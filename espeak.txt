@@ -1,0 +1,3 @@
+espeak -xqf 2Nite.txt --phonout=2Nite.txt.ipa
+
+'espeak -xqf C:\\Users\\HSANG3\\Desktop\\Raplyzer\\lyricsGenerator\\Action_Bronson\\5_Minute_Beats_1_Take_Raps.txt --phonout= C:\\Users\\HSANG3\\Desktop\\Raplyzer\\lyricsGenerator\\Action_Bronson\\5_Minute_Beats_1_Take_Raps.txt.ipa'
