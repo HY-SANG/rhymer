@@ -1,3 +1,15 @@
-espeak -xqf 2Nite.txt --phonout=2Nite.txt.ipa
+espeak -xqf C:\Users\HSANG3\Desktop\Rhymer\lyricsGenerator\DJ_Khaled\365.txt --phonout=C:\Users\HSANG3\Desktop\Rhymer\lyricsGenerator\DJ_Khaled\365.txt.ipa
 
-'espeak -xqf C:\\Users\\HSANG3\\Desktop\\Raplyzer\\lyricsGenerator\\Action_Bronson\\5_Minute_Beats_1_Take_Raps.txt --phonout= C:\\Users\\HSANG3\\Desktop\\Raplyzer\\lyricsGenerator\\Action_Bronson\\5_Minute_Beats_1_Take_Raps.txt.ipa'
+
+
+espeak -xqf "C:\Users\HSANG3\Desktop\Rhymer\lyricsGenerator\DJ_Khaled\365.txt" --phonout="C:\Users\HSANG3\Desktop\Rhymer\lyricsGenerator\DJ_Khaled\365.txt.ipa"
+
+
+
+cd C:\Users\HSANG3\Desktop\Rhymer\lyricsGenerator\DJ_Khaled
+
+cd c/Users/HSANG3/Desktop/Rhymer/lyricsGenerator/DJ_Khaled
+
+espeak -xqf "365.txt" --phonout= "365.txt.ipa"
+
+espeak -xqf 365.txt --phonout=365.txt.ipa
