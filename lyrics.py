@@ -24,7 +24,7 @@ class Lyrics:
         self.lookback = lookback
         if filename is not None:
             self.filename = filename
-            f = codecs.open(filename, 'r', 'utf8')
+            f = codecs.open(filename, 'r', 'utf8', errors='ignore')
             self.text_raw = f.read()
             f.close()
         elif text is not None:
