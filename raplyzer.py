@@ -59,8 +59,7 @@ def read_lyrics(lyrics_dir='lyrics_en', artist=None, album=None,
                 os.rename(file_name,tmp)
                 file_name = tmp
 
-                l = Lyrics(file_name, print_stats=print_stats, 
-                           language=language, lookback=lookback)
+                l = Lyrics(file_name, print_stats=print_stats,language=language, lookback=lookback)
                 rl = l.get_avg_rhyme_length()
                 rls.append(rl)
                 song_scores.append(rl)
