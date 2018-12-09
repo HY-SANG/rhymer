@@ -49,7 +49,7 @@ def read_lyrics(lyrics_dir='lyrics_en', artist=None, album=None,
         for al in albums:
             album_rls = []
             songs = os.listdir(lyrics_dir+'/'+a+'/'+al)
-            # Only the .txt files
+            # only the .txt files
             songs = [s for s in songs if len(s)>=4 and s[-4:]=='.txt']
             for song in songs:
                 file_name = lyrics_dir+'/'+a+'/'+al+'/'+song
