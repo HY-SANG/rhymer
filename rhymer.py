@@ -9,7 +9,8 @@ import json
 
 from lyrics import Lyrics
 
-def read_lyrics(lyrics_dir='lyrics_en', artist=None, album=None, 
+
+def read_lyrics(lyrics_dir='lyrics_en', artist=None, album=None,
                 print_stats=False, language='en-us', lookback=15):
     '''
     Read lyrics and compute Rhyme factor (riimikerroin) for each
@@ -38,7 +39,7 @@ def read_lyrics(lyrics_dir='lyrics_en', artist=None, album=None,
     longest_rhymes = []
     max_rhymes = 5
     for a in artists:
-        print ("Analyzing artist: %s" % a)
+        print("Analyzing artist: %s" % a)
         rls = []
         all_words = []
         if album is not None:
@@ -50,16 +51,16 @@ def read_lyrics(lyrics_dir='lyrics_en', artist=None, album=None,
             album_rls = []
             songs = os.listdir(lyrics_dir+'/'+a+'/'+al)
             # Only the .txt files
-            songs = [s for s in songs if len(s)>=4 and s[-4:]=='.txt']
+            songs = [s for s in songs if len(s) >= 4 and s[-4:] == '.txt']
             for song in songs:
                 file_name = lyrics_dir+'/'+a+'/'+al+'/'+song
                 # remove ',' and '&' in file_name
-                tmp = re.sub('_&_','_and_',file_name)
-                tmp = re.sub(',','',tmp)
-                os.rename(file_name,tmp)
+                tmp = re.sub('_&_', '_and_', file_name)
+                tmp = re.sub(',', '', tmp)
+                os.rename(file_name, tmp)
                 file_name = tmp
 
-                l = Lyrics(file_name, print_stats=print_stats, 
+                l = Lyrics(file_name, print_stats=print_stats,
                            language=language, lookback=lookback)
                 rl = l.get_avg_rhyme_length()
                 rls.append(rl)
@@ -79,8 +80,8 @@ def read_lyrics(lyrics_dir='lyrics_en', artist=None, album=None,
                     text = rx.sub(' ', text)
                     all_words += text.split()
             # Print stats for the album
-            #print "%s - %s: %.3f" % (a, al, np.mean(np.array(album_rls)))
-            #print "%.5f" % (np.mean(np.array(album_rls)))
+            # print "%s - %s: %.3f" % (a, al, np.mean(np.array(album_rls)))
+            # print "%.5f" % (np.mean(np.array(album_rls)))
 
         # Compute the number of unique words the artist has used
         n_words = len(all_words)
@@ -102,37 +103,38 @@ def read_lyrics(lyrics_dir='lyrics_en', artist=None, album=None,
     uniq_words = uniq_words[order]
     artist_scores = artist_scores[order]
 
-    print ("\nBest rhymes")
+    print("\nBest rhymes")
     while len(longest_rhymes) > 0:
         l, rhyme = heapq.heappop(longest_rhymes)
-        print (rhyme)
+        print(rhyme)
 
-    print ("\nBest songs:")
+    print("\nBest songs:")
     song_scores = np.array(song_scores)
     song_names = np.array(song_names)
     song_names = song_names[np.argsort(song_scores)[::-1]]
     song_scores = sorted(song_scores)[::-1]
-    for i in range(min(10,len(song_scores))):
-        print ('%.3f\t%s' % (song_scores[i], song_names[i]))
+    for i in range(min(10, len(song_scores))):
+        print('%.3f\t%s' % (song_scores[i], song_names[i]))
 
-    print ("\nBest artists:")
+    print("\nBest artists:")
     for i in range(len(artist_scores)):
         rx = re.compile(u'_')
         name = rx.sub(' ', artists[i])
-        print ('%d.\t%.3f\t%s' % (i+1, artist_scores[i], name))
+        print('%d.\t%.3f\t%s' % (i+1, artist_scores[i], name))
 
-def sort_albums_by_year(albums):
-    years = []
-    for a in albums:
-        m = re.match('.+y(\d\d\d\d)y$', a)
-        if m:
-            years.append(int(m.group(1)))
-        else:
-            years.append(0)
-    years = np.array(years)
-    albums = np.array(albums)
-    albums = list(albums[np.argsort(years)])
-    return albums
+# def sort_albums_by_year(albums):
+#     years = []
+#     for a in albums:
+#         m = re.match('.+y(\d\d\d\d)y$', a)
+#         if m:
+#             years.append(int(m.group(1)))
+#         else:
+#             years.append(0)
+#     years = np.array(years)
+#     albums = np.array(albums)
+#     albums = list(albums[np.argsort(years)])
+#     return albums
+
 
 def main():
     # Analyze lyrics of all available artists (English)
@@ -140,11 +142,11 @@ def main():
     # Analyze lyrics of Paleface (English)
     #read_lyrics(lyrics_dir='lyrics_en', artist='Paleface', print_stats=True, language='en-us', lookback=15)
 
-
     # Analyze lyrics of all available artists (Finnish)
     #read_lyrics(lyrics_dir='lyrics', language='fi', lookback=10)
     # Analyze lyrics of Paleface (Finnish)
     #read_lyrics(lyrics_dir='lyrics', artist='Paleface', language='fi', lookback=10)
+
 
 if __name__ == '__main__':
     main()
