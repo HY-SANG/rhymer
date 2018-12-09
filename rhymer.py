@@ -45,7 +45,7 @@ def read_lyrics(lyrics_dir='lyrics_en', artist=None, album=None, print_stats=Fal
             albums = [album]
         else:
             albums = os.listdir(lyrics_dir+'/'+a)
-            albums = sort_albums_by_year(albums)
+            # albums = sort_albums_by_year(albums)
         for al in albums:
             album_rls = []
             songs = os.listdir(lyrics_dir+'/'+a+'/'+al)
