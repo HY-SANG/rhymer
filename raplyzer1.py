@@ -9,7 +9,10 @@ import json
 
 from lyrics import Lyrics
 
-def read_lyrics(lyrics_dir='lyrics_en', artist=None, album=None, 
+path = r"C:\Users\HSANG3\Desktop\Rhymer\lyricsGenerator"
+path = r"C:\Users\HSANG3\Desktop\Rhymer\lyrics_en"
+
+def read_lyrics(lyrics_dir=path, artist=None, album=None, 
                 print_stats=False, language='en-us', lookback=15):
     '''
     Read lyrics and compute Rhyme factor (riimikerroin) for each
@@ -30,7 +33,7 @@ def read_lyrics(lyrics_dir='lyrics_en', artist=None, album=None,
     if artist is not None:
         artists = [artist]
     else:
-        artists = os.listdir(lyrics_dir)
+        artists = os.listdir(path)
     artist_scores = []
     song_scores = []
     song_names = []
@@ -41,37 +44,42 @@ def read_lyrics(lyrics_dir='lyrics_en', artist=None, album=None,
         print ("Analyzing artist: %s" % a)
         rls = []
         all_words = []
-        if album is not None:
-            albums = [album]
-        else:
-            albums = os.listdir(lyrics_dir+'/'+a)
-            albums = sort_albums_by_year(albums)
-        for al in albums:
-            album_rls = []
-            songs = os.listdir(lyrics_dir+'/'+a+'/'+al)
+        album_rls = []
+        songs = os.listdir(lyrics_dir+'/'+a)
             # Only the .txt files
-            songs = [s for s in songs if len(s)>=4 and s[-4:]=='.txt']
-            for song in songs:
-                file_name = lyrics_dir+'/'+a+'/'+al+'/'+song
-                l = Lyrics(file_name, print_stats=print_stats, 
-                           language=language, lookback=lookback)
-                rl = l.get_avg_rhyme_length()
-                rls.append(rl)
-                song_scores.append(rl)
-                song_names.append(file_name)
-                album_rls.append(rl)
-                if len(longest_rhymes) < max_rhymes:
-                    heapq.heappush(longest_rhymes, l.get_longest_rhyme())
-                else:
-                    heapq.heappushpop(longest_rhymes, l.get_longest_rhyme())
+        songs = [s for s in songs if len(s)>=4 and s[-4:]=='.txt']
+        for song in songs:
+            file_name = lyrics_dir+'/'+a+'/'+song
 
-                if language == 'fi':
-                    all_words += l.text.split()
-                else:
-                    text = l.text_orig.lower()
-                    rx = re.compile(u'[^\wåäö]+')
-                    text = rx.sub(' ', text)
-                    all_words += text.split()
+                # create .ipa file
+            ipa = file_name+'.ipa'
+            if os.path.exists(ipa)==False:  
+                ipfile= open(ipa,'w')
+                ipfile.close()
+            file= open(ipa,'w')
+            cmd = u'espeak -xqf %s' % file_name
+            pho = str(os.system(cmd))
+            file.write(str(pho.encode('utf-8').strip()))
+            file.close()
+
+            l = Lyrics(file_name, print_stats=print_stats,language=language, lookback=lookback)
+            rl = l.get_avg_rhyme_length()
+            rls.append(rl)
+            song_scores.append(rl)
+            song_names.append(file_name)
+            album_rls.append(rl)
+            if len(longest_rhymes) < max_rhymes:
+                heapq.heappush(longest_rhymes, l.get_longest_rhyme())
+            else:
+                heapq.heappushpop(longest_rhymes, l.get_longest_rhyme())
+
+            if language == 'fi':
+                all_words += l.text.split()
+            else:
+                text = l.text_orig.lower()
+                rx = re.compile(u'[^\wåäö]+')
+                text = rx.sub(' ', text)
+                all_words += text.split()
             # Print stats for the album
             #print "%s - %s: %.3f" % (a, al, np.mean(np.array(album_rls)))
             #print "%.5f" % (np.mean(np.array(album_rls)))
@@ -130,7 +138,7 @@ def sort_albums_by_year(albums):
 
 def main():
     # Analyze lyrics of all available artists (English)
-    read_lyrics(lyrics_dir='lyrics_en', language='en-us', lookback=15)
+    read_lyrics(lyrics_dir=path, language='en-us', lookback=15)
     # Analyze lyrics of Paleface (English)
     #read_lyrics(lyrics_dir='lyrics_en', artist='Paleface', print_stats=True, language='en-us', lookback=15)
 
