@@ -10,8 +10,7 @@ import json
 from lyrics import Lyrics
 
 
-def read_lyrics(lyrics_dir='lyrics_en', artist=None, album=None,
-                print_stats=False, language='en-us', lookback=15):
+def read_lyrics(lyrics_dir='lyrics_en', artist=None, album=None, print_stats=False, language='en-us', lookback=15):
     '''
     Read lyrics and compute Rhyme factor (riimikerroin) for each
     artist.
