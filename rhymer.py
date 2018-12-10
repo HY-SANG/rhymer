@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-import codecs
 import re
-import numpy as np
 import os
-import heapq
-import datetime as dt
 import json
+import heapq
+import codecs
+import numpy as np
+import pandas as pd
+import datetime as dt
 
 from lyrics import Lyrics
-
 
 def read_lyrics(lyrics_dir='lyrics_en', artist=None, album=None, print_stats=False, language='en-us', lookback=15):
     '''
@@ -114,12 +114,18 @@ def read_lyrics(lyrics_dir='lyrics_en', artist=None, album=None, print_stats=Fal
     song_scores = sorted(song_scores)[::-1]
     for i in range(min(10, len(song_scores))):
         print('%.3f\t%s' % (song_scores[i], song_names[i]))
-
+        
+    df = pd.DataFrame({'rank':[], 'score':[], 'name':[]})
+    
     print("\nBest artists:")
     for i in range(len(artist_scores)):
         rx = re.compile(u'_')
         name = rx.sub(' ', artists[i])
         print('%d.\t%.3f\t%s' % (i+1, artist_scores[i], name))
+        new = pd.DataFrame({'rank': [(i+1)], 'score': [artist_scores[i]], 'name': [name]})
+        df = df.append(new)
+
+    df.to_csv('out.csv')
 
 # def sort_albums_by_year(albums):
 #     years = []
@@ -133,7 +139,6 @@ def read_lyrics(lyrics_dir='lyrics_en', artist=None, album=None, print_stats=Fal
 #     albums = np.array(albums)
 #     albums = list(albums[np.argsort(years)])
 #     return albums
-
 
 def main():
     # Analyze lyrics of all available artists (English)
